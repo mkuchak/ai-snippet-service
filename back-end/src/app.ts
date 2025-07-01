@@ -1,6 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { type Request, type Response } from "express";
+import { createSnippetRoutes } from "./adapters/http/snippet-routes";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const MONGODB_URI =
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(createSnippetRoutes());
 
 app.get("/api/health", (_req: Request, res: Response) => {
   res.json({
