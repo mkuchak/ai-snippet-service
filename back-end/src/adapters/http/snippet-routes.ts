@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { SnippetService } from "../../core/services/snippet-service";
+import type { SnippetService } from "../../core/services/snippet-service";
 import { SnippetControllers } from "./snippet-controllers";
 
 export function createSnippetRoutes(snippetService: SnippetService): Router {

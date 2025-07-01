@@ -50,7 +50,7 @@ export class SnippetControllers {
           id: snippet.id,
           text: snippet.text,
           summary: snippet.summary,
-        }))
+        })),
       );
     } catch (error) {
       console.error(error);

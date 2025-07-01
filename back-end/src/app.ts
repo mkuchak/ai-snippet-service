@@ -1,12 +1,12 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { type Request, type Response } from "express";
-import { SnippetService } from "./core/services/snippet-service";
-import { createSnippetRoutes } from "./adapters/http/snippet-routes";
-import { env } from "./config/env";
+import { MongoClient } from "mongodb";
 import { GeminiGateway } from "./adapters/ai/gemini-gateway";
 import { MongoDBSnippetDAO } from "./adapters/database/mongodb-snippet-dao";
-import { MongoClient } from "mongodb";
+import { createSnippetRoutes } from "./adapters/http/snippet-routes";
+import { env } from "./config/env";
+import { SnippetService } from "./core/services/snippet-service";
 
 dotenv.config();
 
@@ -41,7 +41,9 @@ async function startApp() {
       res.json({ status: "healthy", timestamp: new Date().toISOString() });
     });
 
-    app.listen(env.PORT, () => console.log(`🚀 Server is running on port ${env.PORT}`));
+    app.listen(env.PORT, () =>
+      console.log(`🚀 Server is running on port ${env.PORT}`),
+    );
   } catch (error) {
     console.error("❌ Failed to start application:", error);
     process.exit(1);

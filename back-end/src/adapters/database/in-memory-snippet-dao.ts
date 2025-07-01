@@ -1,6 +1,10 @@
 import { randomUUID } from "node:crypto";
 import type { SnippetDAO } from "../../core/ports/snippet-dao";
-import type { CreateSnippetData, Snippet, UpdateSnippetData } from "../../core/types/snippet";
+import type {
+  CreateSnippetData,
+  Snippet,
+  UpdateSnippetData,
+} from "../../core/types/snippet";
 
 export class InMemorySnippetDAO implements SnippetDAO {
   private snippets: Snippet[] = [];
@@ -26,7 +30,9 @@ export class InMemorySnippetDAO implements SnippetDAO {
   }
 
   async findAll(): Promise<Snippet[]> {
-    return [...this.snippets].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return [...this.snippets].sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+    );
   }
 
   async update(id: string, data: UpdateSnippetData): Promise<Snippet | null> {

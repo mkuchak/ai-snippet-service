@@ -1,6 +1,10 @@
-import { MongoClient, Db, Collection, ObjectId } from "mongodb";
+import { type Collection, type Db, type MongoClient, ObjectId } from "mongodb";
 import type { SnippetDAO } from "../../core/ports/snippet-dao";
-import type { CreateSnippetData, Snippet, UpdateSnippetData } from "../../core/types/snippet";
+import type {
+  CreateSnippetData,
+  Snippet,
+  UpdateSnippetData,
+} from "../../core/types/snippet";
 
 interface MongoSnippet {
   _id: ObjectId;
@@ -41,7 +45,9 @@ export class MongoDBSnippetDAO implements SnippetDAO {
         updatedAt: now,
       };
 
-      const result = await this.collection.insertOne(mongoSnippet as MongoSnippet);
+      const result = await this.collection.insertOne(
+        mongoSnippet as MongoSnippet,
+      );
 
       const createdSnippet: MongoSnippet = {
         _id: result.insertedId,
@@ -51,7 +57,9 @@ export class MongoDBSnippetDAO implements SnippetDAO {
       return this.toSnippet(createdSnippet);
     } catch (error) {
       console.error("MongoDB DAO - Create error:", error);
-      throw new Error(`Failed to create snippet: ${error instanceof Error ? error.message : "Unknown error"}`);
+      throw new Error(
+        `Failed to create snippet: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
     }
   }
 
@@ -61,7 +69,9 @@ export class MongoDBSnippetDAO implements SnippetDAO {
         return null;
       }
 
-      const mongoSnippet = await this.collection.findOne({ _id: new ObjectId(id) });
+      const mongoSnippet = await this.collection.findOne({
+        _id: new ObjectId(id),
+      });
 
       if (!mongoSnippet) {
         return null;
@@ -76,12 +86,17 @@ export class MongoDBSnippetDAO implements SnippetDAO {
 
   async findAll(): Promise<Snippet[]> {
     try {
-      const mongoSnippets = await this.collection.find({}).sort({ createdAt: -1 }).toArray();
+      const mongoSnippets = await this.collection
+        .find({})
+        .sort({ createdAt: -1 })
+        .toArray();
 
       return mongoSnippets.map((snippet) => this.toSnippet(snippet));
     } catch (error) {
       console.error("MongoDB DAO - FindAll error:", error);
-      throw new Error(`Failed to retrieve snippets: ${error instanceof Error ? error.message : "Unknown error"}`);
+      throw new Error(
+        `Failed to retrieve snippets: ${error instanceof Error ? error.message : "Unknown error"}`,
+      );
     }
   }
 
@@ -107,7 +122,7 @@ export class MongoDBSnippetDAO implements SnippetDAO {
       const result = await this.collection.findOneAndUpdate(
         { _id: new ObjectId(id) },
         { $set: updateData },
-        { returnDocument: "after" }
+        { returnDocument: "after" },
       );
 
       if (!result) {

@@ -42,7 +42,9 @@ describe("InMemorySnippetDAO", () => {
 
     expect(updated?.text).toBe("updated");
     expect(updated?.summary).toBe("Original");
-    expect(updated?.updatedAt.getTime()).toBeGreaterThanOrEqual(created.updatedAt.getTime());
+    expect(updated?.updatedAt.getTime()).toBeGreaterThanOrEqual(
+      created.updatedAt.getTime(),
+    );
   });
 
   it("should delete snippets", async () => {

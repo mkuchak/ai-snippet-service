@@ -2,8 +2,13 @@ import { z } from "zod";
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-  MONGODB_URI: z.string().url().default("mongodb://localhost:27017/ai-snippet-service"),
+  NODE_ENV: z
+    .enum(["development", "production", "test"])
+    .default("development"),
+  MONGODB_URI: z
+    .string()
+    .url()
+    .default("mongodb://localhost:27017/ai-snippet-service"),
   MONGODB_USERNAME: z.string().default("admin"),
   MONGODB_PASSWORD: z.string().default("password"),
   MONGODB_DATABASE: z.string().default("ai-snippet-service"),

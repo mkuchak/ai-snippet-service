@@ -1,8 +1,9 @@
-import { beforeAll, afterAll, describe, expect, it } from "vitest";
-import { MongoClient } from "mongodb";
-import { MongoDBSnippetDAO } from "./mongodb-snippet-dao";
 import { randomUUID } from "node:crypto";
+import { MongoClient } from "mongodb";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { env } from "../../config/env";
+import type { Snippet } from "../../core/types/snippet";
+import { MongoDBSnippetDAO } from "./mongodb-snippet-dao";
 
 const createdTestDatabases: string[] = [];
 let globalClient: MongoClient;
@@ -110,10 +111,12 @@ describe("MongoDBSnippetDAO", () => {
       expect(results).toHaveLength(2);
 
       // Verify results are sorted by createdAt descending (newest first)
-      expect(results[0].createdAt.getTime()).toBeGreaterThanOrEqual(results[1].createdAt.getTime());
+      expect(results[0].createdAt.getTime()).toBeGreaterThanOrEqual(
+        results[1].createdAt.getTime(),
+      );
 
       // Verify all expected snippets are present
-      const resultIds = results.map((r: any) => r.id).sort();
+      const resultIds = results.map((r: Snippet) => r.id).sort();
       const expectedIds = [snippet1.id, snippet2.id].sort();
       expect(resultIds).toEqual(expectedIds);
     });
@@ -148,7 +151,9 @@ describe("MongoDBSnippetDAO", () => {
         summary: updateData.summary,
         createdAt: created.createdAt,
       });
-      expect(updated?.updatedAt.getTime()).toBeGreaterThanOrEqual(created.updatedAt.getTime());
+      expect(updated?.updatedAt.getTime()).toBeGreaterThanOrEqual(
+        created.updatedAt.getTime(),
+      );
     });
 
     it("should partially update a snippet", async () => {
@@ -176,7 +181,9 @@ describe("MongoDBSnippetDAO", () => {
 
     it("should return null for non-existent id", async () => {
       const { dao } = createUniqueDAO();
-      const result = await dao.update("000000000000000000000000", { text: "updated" });
+      const result = await dao.update("000000000000000000000000", {
+        text: "updated",
+      });
       expect(result).toBeNull();
     });
 
