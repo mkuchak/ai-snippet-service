@@ -12,7 +12,7 @@ function createTestApp() {
   const snippetService = new SnippetService(dao, aiService);
   const app = express();
   app.use(express.json());
-  app.use("/api", createSnippetRoutes(snippetService));
+  app.use(createSnippetRoutes(snippetService));
   return app;
 }
 
@@ -20,7 +20,7 @@ const app = createTestApp();
 
 describe("Snippet API", () => {
   it("should create a snippet", async () => {
-    const createResponse = await request(app).post("/api/snippets").send({ text: "Hello world" }).expect(201);
+    const createResponse = await request(app).post("/snippets").send({ text: "Hello world" }).expect(201);
 
     expect(createResponse.body).toHaveProperty("id");
     expect(createResponse.body.text).toBe("Hello world");
@@ -28,29 +28,29 @@ describe("Snippet API", () => {
   });
 
   it("should get a snippet by ID", async () => {
-    const createResponse = await request(app).post("/api/snippets").send({ text: "Test snippet" }).expect(201);
+    const createResponse = await request(app).post("/snippets").send({ text: "Test snippet" }).expect(201);
     const snippetId = createResponse.body.id;
 
-    const getResponse = await request(app).get(`/api/snippets/${snippetId}`).expect(200);
+    const getResponse = await request(app).get(`/snippets/${snippetId}`).expect(200);
 
     expect(getResponse.body.id).toBe(snippetId);
     expect(getResponse.body.text).toBe("Test snippet");
   });
 
   it("should list all snippets", async () => {
-    await request(app).post("/api/snippets").send({ text: "First snippet" }).expect(201);
+    await request(app).post("/snippets").send({ text: "First snippet" }).expect(201);
 
-    const listResponse = await request(app).get("/api/snippets").expect(200);
+    const listResponse = await request(app).get("/snippets").expect(200);
 
     expect(Array.isArray(listResponse.body)).toBe(true);
     expect(listResponse.body.length).toBeGreaterThan(0);
   });
 
   it("should return 400 for missing text", async () => {
-    await request(app).post("/api/snippets").send({}).expect(400);
+    await request(app).post("/snippets").send({}).expect(400);
   });
 
   it("should return 404 for non-existent snippet", async () => {
-    await request(app).get("/api/snippets/non-existent").expect(404);
+    await request(app).get("/snippets/non-existent").expect(404);
   });
 });

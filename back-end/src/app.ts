@@ -10,6 +10,8 @@ import { MongoClient } from "mongodb";
 
 dotenv.config();
 
+const API_PREFIX = "/api/v1";
+
 async function startApp() {
   try {
     const client = new MongoClient(env.MONGODB_URI);
@@ -33,7 +35,7 @@ async function startApp() {
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(createSnippetRoutes(snippetService));
+    app.use(API_PREFIX, createSnippetRoutes(snippetService));
 
     app.get("/api/health", (_req: Request, res: Response) => {
       res.json({ status: "healthy", timestamp: new Date().toISOString() });
