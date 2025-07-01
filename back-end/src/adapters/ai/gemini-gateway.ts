@@ -1,9 +1,12 @@
 import dedent from "dedent";
 import { LLMFactory } from "llm-factory";
 import type { AIService } from "../../core/ports/ai-service";
+import { env } from "../../config/env";
 
 export class GeminiGateway implements AIService {
-  private llmFactory: LLMFactory = new LLMFactory();
+  private llmFactory: LLMFactory = new LLMFactory({
+    googleApiKey: env.GEMINI_API_KEY,
+  });
 
   async generateSummary(text: string): Promise<string> {
     const prompt = dedent`
