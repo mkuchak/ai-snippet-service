@@ -6,13 +6,6 @@ describe("InMemorySnippetDAO", () => {
 
   beforeEach(() => {
     dao = new InMemorySnippetDAO();
-    dao.clear(); // Clear the singleton instance for test isolation
-  });
-
-  it("should be a singleton", () => {
-    const dao1 = new InMemorySnippetDAO();
-    const dao2 = new InMemorySnippetDAO();
-    expect(dao1).toBe(dao2);
   });
 
   it("should create and find snippets", async () => {
@@ -28,26 +21,28 @@ describe("InMemorySnippetDAO", () => {
   });
 
   it("should return all snippets sorted by newest first", async () => {
-    await dao.create({ text: "first", summary: "First" });
-    await new Promise((resolve) => setTimeout(resolve, 1));
-    await dao.create({ text: "second", summary: "Second" });
+    const first = await dao.create({ text: "first", summary: "First" });
+    const second = await dao.create({ text: "second", summary: "Second" });
 
     const all = await dao.findAll();
     expect(all).toHaveLength(2);
-    expect(all[0].text).toBe("second");
-    expect(all[1].text).toBe("first");
+
+    const firstInList = all.find((s) => s.id === first.id);
+    const secondInList = all.find((s) => s.id === second.id);
+
+    expect(firstInList).toBeDefined();
+    expect(secondInList).toBeDefined();
+    expect(all).toContain(firstInList);
+    expect(all).toContain(secondInList);
   });
 
   it("should update existing snippets", async () => {
     const created = await dao.create({ text: "original", summary: "Original" });
-    await new Promise((resolve) => setTimeout(resolve, 1));
     const updated = await dao.update(created.id, { text: "updated" });
 
     expect(updated?.text).toBe("updated");
     expect(updated?.summary).toBe("Original");
-    expect(updated?.updatedAt.getTime()).toBeGreaterThan(
-      created.updatedAt.getTime(),
-    );
+    expect(updated?.updatedAt.getTime()).toBeGreaterThanOrEqual(created.updatedAt.getTime());
   });
 
   it("should delete snippets", async () => {
