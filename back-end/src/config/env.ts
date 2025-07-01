@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
-  NODE_ENV: z.enum(["development", "production"]).default("development"),
+  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   MONGODB_URI: z.string().url().default("mongodb://localhost:27017/ai-snippet-service"),
   GEMINI_API_KEY: z.string().optional(),
   OPENAI_API_KEY: z.string().optional(),
