@@ -1,0 +1,66 @@
+services:
+  # Back-end Development Overrides
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+      target: development-dependencies-env
+    image: ai-snippet-service/backend:dev
+    env_file:
+      - ./back-end/.env
+    environment:
+      NODE_ENV: development
+      PORT: ${BACKEND_PORT:-3000}
+      MONGODB_URI: mongodb://${MONGODB_USERNAME:-admin}:${MONGODB_PASSWORD:-password}@mongodb:27017/${MONGODB_DATABASE_DEV:-ai-snippet-service-dev}?authSource=admin
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret}
+      API_KEY: ${API_KEY:-dev-api-key}
+    volumes:
+      - ./back-end/src:/app/src
+      - ./back-end/package.json:/app/package.json
+    command: pnpm run dev
+
+  # Front-end Development Overrides
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+      target: development-dependencies-env
+    image: ai-snippet-service/frontend:dev
+    env_file:
+      - ./front-end/.env
+    environment:
+      NODE_ENV: development
+      PORT: ${FRONTEND_PORT:-3030}
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:3000/api}
+    volumes:
+      - ./front-end/app:/app/app
+      - ./front-end/server:/app/server
+      - ./front-end/package.json:/app/package.json
+      - ./front-end/vite.config.ts:/app/vite.config.ts
+      - ./front-end/tsconfig.json:/app/tsconfig.json
+    command: pnpm run dev
+
+  # MongoDB Development Settings
+  mongodb:
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE_DEV:-ai-snippet-service-dev}
+
+  # Mongo Express Development Settings
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: ai-snippet-mongo-express-dev
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USERNAME:-admin}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD:-password}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_USERNAME:-admin}:${MONGODB_PASSWORD:-password}@mongodb:27017/
+      ME_CONFIG_BASICAUTH: false
+    ports:
+      - "${MONGO_EXPRESS_PORT:-8081}:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - ai-snippet-network 

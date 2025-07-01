@@ -1,0 +1,65 @@
+services:
+  # Back-end API Service
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    image: ai-snippet-service/backend:prod
+    container_name: ai-snippet-backend
+    restart: unless-stopped
+    environment:
+      PORT: ${BACKEND_PORT:-3000}
+      NODE_ENV: ${NODE_ENV:-production}
+      MONGODB_URI: mongodb://${MONGODB_USERNAME:-admin}:${MONGODB_PASSWORD:-password}@mongodb:27017/${MONGODB_DATABASE:-ai-snippet-service}?authSource=admin
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      API_KEY: ${API_KEY:-change-this-in-production}
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    depends_on:
+      - mongodb
+    networks:
+      - ai-snippet-network
+
+  # Front-end Web Application
+  frontend:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    image: ai-snippet-service/frontend:prod
+    container_name: ai-snippet-frontend
+    restart: unless-stopped
+    environment:
+      PORT: ${FRONTEND_PORT:-3030}
+      NODE_ENV: ${NODE_ENV:-production}
+      VITE_API_URL: ${VITE_API_URL:-http://backend:3000}
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://backend:3000/api}
+    ports:
+      - "${FRONTEND_PORT:-3030}:3030"
+    depends_on:
+      - backend
+    networks:
+      - ai-snippet-network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:8.0.11
+    container_name: ai-snippet-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE:-ai-snippet-service}
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - ai-snippet-network
+
+
+volumes:
+  mongodb_data:
+
+networks:
+  ai-snippet-network:
+    driver: bridge 
