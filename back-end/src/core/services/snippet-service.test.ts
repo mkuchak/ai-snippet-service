@@ -1,18 +1,18 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { SnippetService } from "./snippet-service";
-import { InMemorySnippetRepository } from "../../adapters/database/in-memory-snippet-repository";
+import { beforeEach, describe, expect, it } from "vitest";
 import { MockAIGateway } from "../../adapters/ai/mock-ai-gateway";
+import { InMemorySnippetDAO } from "../../adapters/database/in-memory-snippet-dao";
+import { SnippetService } from "./snippet-service";
 
 describe("SnippetService Integration Test", () => {
   let snippetService: SnippetService;
-  let repository: InMemorySnippetRepository;
+  let dao: InMemorySnippetDAO;
   let aiService: MockAIGateway;
 
   beforeEach(() => {
-    repository = new InMemorySnippetRepository();
-    repository.clear();
+    dao = new InMemorySnippetDAO();
+    dao.clear();
     aiService = new MockAIGateway();
-    snippetService = new SnippetService(repository, aiService);
+    snippetService = new SnippetService(dao, aiService);
   });
 
   it("should create a snippet with AI-generated summary", async () => {

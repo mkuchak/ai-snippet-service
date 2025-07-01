@@ -1,16 +1,20 @@
 import { randomUUID } from "node:crypto";
-import { SnippetRepository } from "../../core/ports/snippet-repository";
-import { Snippet, CreateSnippetData, UpdateSnippetData } from "../../core/types/snippet";
+import type { SnippetDAO } from "../../core/ports/snippet-dao";
+import type {
+  CreateSnippetData,
+  Snippet,
+  UpdateSnippetData,
+} from "../../core/types/snippet";
 
-export class InMemorySnippetRepository implements SnippetRepository {
-  private static instance: InMemorySnippetRepository;
+export class InMemorySnippetDAO implements SnippetDAO {
+  private static instance: InMemorySnippetDAO;
   private snippets: Snippet[] = [];
 
   constructor() {
-    if (InMemorySnippetRepository.instance) {
-      return InMemorySnippetRepository.instance;
+    if (InMemorySnippetDAO.instance) {
+      return InMemorySnippetDAO.instance;
     }
-    InMemorySnippetRepository.instance = this;
+    InMemorySnippetDAO.instance = this;
   }
 
   async create(data: CreateSnippetData): Promise<Snippet> {
@@ -34,7 +38,9 @@ export class InMemorySnippetRepository implements SnippetRepository {
   }
 
   async findAll(): Promise<Snippet[]> {
-    return [...this.snippets].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    return [...this.snippets].sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+    );
   }
 
   async update(id: string, data: UpdateSnippetData): Promise<Snippet | null> {

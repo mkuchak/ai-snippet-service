@@ -1,19 +1,22 @@
-import { AIService } from "../ports/ai-service";
-import { SnippetRepository } from "../ports/snippet-repository";
+import type { AIService } from "../ports/ai-service";
+import type { SnippetDAO } from "../ports/snippet-dao";
 
 export class SnippetService {
-  constructor(private repository: SnippetRepository, private aiService: AIService) {}
+  constructor(
+    private dao: SnippetDAO,
+    private aiService: AIService,
+  ) {}
 
   async createSnippet(text: string) {
     const summary = await this.aiService.generateSummary(text);
-    return await this.repository.create({ text, summary });
+    return await this.dao.create({ text, summary });
   }
 
   async getSnippet(id: string) {
-    return await this.repository.findById(id);
+    return await this.dao.findById(id);
   }
 
   async getAllSnippets() {
-    return await this.repository.findAll();
+    return await this.dao.findAll();
   }
 }

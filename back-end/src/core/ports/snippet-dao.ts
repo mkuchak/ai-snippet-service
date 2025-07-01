@@ -1,6 +1,10 @@
-import { CreateSnippetData, Snippet, UpdateSnippetData } from "../types/snippet";
+import type {
+  CreateSnippetData,
+  Snippet,
+  UpdateSnippetData,
+} from "../types/snippet";
 
-export interface SnippetRepository {
+export interface SnippetDAO {
   create(data: CreateSnippetData): Promise<Snippet>;
   findById(id: string): Promise<Snippet | null>;
   findAll(): Promise<Snippet[]>;
