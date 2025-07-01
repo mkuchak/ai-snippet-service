@@ -1,4 +1,4 @@
-import { AIService } from "../../core/ports/ai-service";
+import type { AIService } from "../../core/ports/ai-service";
 
 export class MockAIGateway implements AIService {
   async generateSummary(text: string): Promise<string> {

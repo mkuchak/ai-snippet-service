@@ -1,6 +1,6 @@
 import dedent from "dedent";
 import { LLMFactory } from "llm-factory";
-import { AIService } from "../../core/ports/ai-service";
+import type { AIService } from "../../core/ports/ai-service";
 
 export class GeminiGateway implements AIService {
   private llmFactory: LLMFactory = new LLMFactory();

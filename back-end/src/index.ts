@@ -1,12 +1,13 @@
 import cors from "cors";
 import dotenv from "dotenv";
-import express, { Request, Response } from "express";
+import express, { type Request, type Response } from "express";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/ai-snippet-service";
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/ai-snippet-service";
 
 app.use(cors());
 app.use(express.json());

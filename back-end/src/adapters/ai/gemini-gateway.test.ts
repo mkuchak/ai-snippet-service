@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { GeminiGateway } from "./gemini-gateway";
 import { LLMFactory } from "llm-factory";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { GeminiGateway } from "./gemini-gateway";
 
 vi.mock("llm-factory", () => ({
   LLMFactory: vi.fn(),
@@ -18,7 +18,7 @@ describe("GeminiGateway", () => {
       () =>
         ({
           generate: mockGenerate,
-        } as unknown as LLMFactory)
+        }) as unknown as LLMFactory,
     );
 
     gateway = new GeminiGateway();
@@ -73,11 +73,14 @@ describe.skip("GeminiGateway - Real Integration", () => {
   it("should generate real summary using actual Gemini API", async () => {
     vi.doUnmock("llm-factory");
     vi.resetModules();
-    
-    const { GeminiGateway: RealGeminiGateway } = await import("./gemini-gateway");
-    
+
+    const { GeminiGateway: RealGeminiGateway } = await import(
+      "./gemini-gateway"
+    );
+
     const gateway = new RealGeminiGateway();
-    const input = "Artificial intelligence is transforming the way we work and live. Machine learning algorithms can now process vast amounts of data to identify patterns and make predictions. This technology is being applied in healthcare, finance, transportation, and many other industries to improve efficiency and outcomes.";
+    const input =
+      "Artificial intelligence is transforming the way we work and live. Machine learning algorithms can now process vast amounts of data to identify patterns and make predictions. This technology is being applied in healthcare, finance, transportation, and many other industries to improve efficiency and outcomes.";
 
     const output = await gateway.generateSummary(input);
 
