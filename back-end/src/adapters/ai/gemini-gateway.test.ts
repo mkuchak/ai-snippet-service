@@ -67,3 +67,24 @@ describe("GeminiGateway", () => {
     expect(output).toBe(expectedSummary);
   });
 });
+
+// This test is skipped because it consumes tokens from the Gemini API
+describe.skip("GeminiGateway - Real Integration", () => {
+  it("should generate real summary using actual Gemini API", async () => {
+    vi.doUnmock("llm-factory");
+    vi.resetModules();
+    
+    const { GeminiGateway: RealGeminiGateway } = await import("./gemini-gateway");
+    
+    const gateway = new RealGeminiGateway();
+    const input = "Artificial intelligence is transforming the way we work and live. Machine learning algorithms can now process vast amounts of data to identify patterns and make predictions. This technology is being applied in healthcare, finance, transportation, and many other industries to improve efficiency and outcomes.";
+
+    const output = await gateway.generateSummary(input);
+
+    expect(output).toBeDefined();
+    expect(typeof output).toBe("string");
+    expect(output.length).toBeGreaterThan(0);
+    expect(output).not.toBe("No content to summarize");
+    console.log("Real Gemini response:", output);
+  }, 10000);
+});
