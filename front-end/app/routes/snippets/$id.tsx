@@ -67,50 +67,69 @@ export default function SnippetDetail({ loaderData }: Route.ComponentProps) {
         isVisible={toast.isVisible}
         onClose={hideToast}
       />
-              <svg
-                className="w-4 h-4 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Back to Snippets
-            </Button>
-          </Link>
 
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-slate-900">
+      <div className="container mx-auto px-4 py-4 sm:py-8">
+        <div className="space-y-4 mb-6 sm:mb-8">
+          <div className="flex items-center justify-between gap-2">
+            <Link to="/snippets" className="flex-shrink-0">
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs sm:text-sm"
+              >
+                <svg
+                  className="w-4 h-4 sm:mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+                <span className="hidden sm:inline">Back to Snippets</span>
+                <span className="sm:hidden">Back</span>
+              </Button>
+            </Link>
+          </div>
+
+          <div className="space-y-1">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
               Snippet Details
             </h1>
-            <p className="text-slate-600 text-sm mt-1">ID: {snippet.id}</p>
+            <div className="flex items-start gap-2">
+              <span className="text-slate-600 text-xs sm:text-sm flex-shrink-0">
+                ID:
+              </span>
+              <p className="text-slate-600 text-xs sm:text-sm font-mono break-all">
+                {snippet.id}
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg border border-slate-200 p-6">
-              <h2 className="text-lg font-semibold text-slate-900 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="order-2 lg:order-1 lg:col-span-2">
+            <div className="bg-white rounded-lg border border-slate-200 p-4 sm:p-6">
+              <h2 className="text-base sm:text-lg font-semibold text-slate-900 mb-4">
                 Snippet Text
               </h2>
-              <div className="bg-slate-50 rounded-md p-4 border border-slate-200">
-                <pre className="whitespace-pre-wrap text-sm text-slate-700 font-mono leading-relaxed">
+              <div className="bg-slate-50 rounded-md p-3 sm:p-4 border border-slate-200 overflow-auto">
+                <pre className="whitespace-pre-wrap text-xs sm:text-sm text-slate-700 font-mono leading-relaxed">
                   {snippet.text}
                 </pre>
               </div>
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="bg-white rounded-lg border border-slate-200 p-6">
-              <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center">
+          <div className="order-1 lg:order-2 space-y-4 sm:space-y-6">
+            <div className="bg-white rounded-lg border border-slate-200 p-4 sm:p-6">
+              <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-4 flex items-center">
                 <svg
-                  className="w-5 h-5 mr-2 text-blue-600"
+                  className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -124,7 +143,7 @@ export default function SnippetDetail({ loaderData }: Route.ComponentProps) {
                 </svg>
                 AI Summary
               </h3>
-              <p className="text-slate-700 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
                 {snippet.summary}
               </p>
             </div>

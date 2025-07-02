@@ -53,13 +53,13 @@ export default function SnippetsIndex({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-slate-900">
+      <div className="container mx-auto px-4 py-4 sm:py-8">
+        <div className="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between mb-6 sm:mb-8">
+          <div className="space-y-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
               Content Summarizer
             </h1>
-            <p className="text-slate-600 mt-1">
+            <p className="text-sm sm:text-base text-slate-600">
               Transform your raw content into actionable AI-powered summaries
             </p>
           </div>
@@ -67,8 +67,14 @@ export default function SnippetsIndex({ loaderData }: Route.ComponentProps) {
           <Button
             onClick={() => setShowCreateForm(!showCreateForm)}
             variant={showCreateForm ? "outline" : "primary"}
+            className="w-full sm:w-auto text-sm sm:text-base whitespace-nowrap"
           >
-            {showCreateForm ? "Cancel" : "Summarize New Content"}
+            <span className="sm:hidden">
+              {showCreateForm ? "Cancel" : "Summarize"}
+            </span>
+            <span className="hidden sm:inline">
+              {showCreateForm ? "Cancel" : "Summarize New Content"}
+            </span>
           </Button>
         </div>
 

@@ -37,13 +37,27 @@ export function SnippetForm({ onCancel }: SnippetFormProps) {
           required
         />
 
-        <div className="flex items-center gap-3">
-          <Button type="submit" disabled={!text.trim() || isSubmitting}>
-            {isSubmitting ? "Generating..." : "Generate AI Summary"}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <Button
+            type="submit"
+            disabled={!text.trim() || isSubmitting}
+            className="text-sm sm:text-base whitespace-nowrap"
+          >
+            <span className="sm:hidden">
+              {isSubmitting ? "Generating..." : "Generate"}
+            </span>
+            <span className="hidden sm:inline">
+              {isSubmitting ? "Generating..." : "Generate AI Summary"}
+            </span>
           </Button>
 
           {onCancel && (
-            <Button type="button" variant="outline" onClick={onCancel}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              className="text-sm sm:text-base whitespace-nowrap"
+            >
               Cancel
             </Button>
           )}
