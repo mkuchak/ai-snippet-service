@@ -45,6 +45,24 @@ describe("Snippet API", () => {
     expect(getResponse.body.text).toBe("Test snippet");
   });
 
+  it("should stream summary generation", async () => {
+    const createResponse = await request(app)
+      .post("/snippets")
+      .send({ text: "Test streaming content" })
+      .expect(201);
+    const snippetId = createResponse.body.id;
+
+    const streamResponse = await request(app)
+      .get(`/snippets/${snippetId}/generate-summary`)
+      .expect(200);
+
+    expect(streamResponse.headers['content-type']).toBe('text/event-stream');
+    expect(streamResponse.headers['cache-control']).toBe('no-cache');
+    expect(streamResponse.headers['connection']).toBe('keep-alive');
+    expect(streamResponse.text).toContain('data:');
+    expect(streamResponse.text).toContain('event: complete');
+  });
+
   it("should list all snippets", async () => {
     await request(app)
       .post("/snippets")
