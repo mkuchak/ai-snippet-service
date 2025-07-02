@@ -17,7 +17,7 @@ services:
     volumes:
       - ./back-end/src:/app/src
       - ./back-end/package.json:/app/package.json
-    command: pnpm run dev
+    command: sh -c "pnpm test:run && pnpm run dev"
 
   # Front-end Development Overrides
   frontend:
