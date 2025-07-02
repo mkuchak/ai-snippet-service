@@ -301,12 +301,12 @@ docker logs -f ai-snippet-backend
 
 ### Service URLs
 
-| Service           | URL                   | Description              |
-| ----------------- | --------------------- | ------------------------ |
-| **Frontend**      | http://localhost:3030 | Main web application     |
-| **Backend API**   | http://localhost:3000 | REST API endpoints       |
-| **Mongo Express** | http://localhost:8081 | Database admin interface |
-| **MongoDB**       | localhost:27017       | Database connection      |
+| Service           | URL                    | Description              |
+| ----------------- | ---------------------- | ------------------------ |
+| **Frontend**      | http://localhost:3030  | Main web application     |
+| **Backend API**   | http://localhost:3000  | REST API endpoints       |
+| **Mongo Express** | http://localhost:8081  | Database admin interface |
+| **MongoDB**       | http://localhost:27017 | Database connection      |
 
 ### Production Environment
 
@@ -330,12 +330,14 @@ This project was built as a demonstration of modern full-stack development pract
 ### 🔧 Backend Architecture Improvements
 
 **Code Organization & Dependency Management**
+
 - **Separate Services and Controllers Methods**: Currently, methods are organized within the same files. For better scalability, I would separate them into dedicated files, especially as the project grows in complexity.
 - **Enhanced Testing Strategy**: While the current tests use mocking and dependency injection principles, I would implement a more sophisticated DI container (like `inversify` or `awilix`) to better control dependency injection and make testing more granular.
 
 **Security & Performance**
+
 - **Rate Limiting**: Implement API rate limiting using `express-rate-limit` to protect against brute force attacks and ensure fair usage or some API Gateway as Cloudflare offers to control it.
-- **Advanced Authentication System** *(I have previously built exactly this type of authentication system)*:
+- **Advanced Authentication System** _(I have previously built exactly this type of authentication system)_:
   - Use `bcrypt` with salt and hash for secure password encryption
   - Implement JWT-based authentication with refresh token mechanism
   - Store refresh tokens in Redis for improved security and session management
@@ -344,43 +346,38 @@ This project was built as a demonstration of modern full-stack development pract
 - **Monitoring & Logging**: Integrate `Sentry` for error tracking and implement structured logging to monitor API usage patterns and performance metrics.
 
 **Data Management**
+
 - **Pagination Strategy**: For large datasets, implement cursor-based pagination instead of offset-based pagination to ensure consistent performance and avoid common pagination pitfalls.
 
 ### 🎨 Frontend Architecture Improvements
 
 **Code Organization**
+
 - **Feature-Based Architecture**: Reorganize components into feature-based folders rather than type-based organization ([see diagram here](https://camo.githubusercontent.com/5750782aede7c6a18b5b435d89a4c5586b9bc4cbb9e6c956bb58056e478742b8/68747470733a2f2f692e736e6970626f6172642e696f2f567a396444612e6a7067)) for better scalability.
 - **Comprehensive Testing**: Add unit tests, integration tests, and end-to-end tests using `Vitest`, `Testing Library`, and `Cypress`.
 
 **User Experience & Analytics**
+
 - **User Behavior Analytics**: Implement `Google Analytics` to track user interactions and application usage patterns.
 - **User Experience Monitoring**: Integrate `Hotjar` or similar tools to understand user behavior through heatmaps and session recordings.
 
 ### ⚖️ Key Tradeoffs Made
 
 **Development Speed vs. Feature Completeness**
+
 - **Authentication**: Chose to implement placeholder routes rather than a full authentication system to focus on core functionality demonstration
 - **Testing Coverage**: Prioritized backend testing with integration and unit tests, but frontend testing was deferred
 - **Error Handling**: Implemented basic error handling but could be more comprehensive with user-friendly error messages and retry mechanisms
 
 **Architecture vs. Simplicity**
+
 - **Hexagonal Architecture**: While this adds complexity, it provides excellent testability and maintainability for future enhancements
 - **TypeScript**: Full TypeScript implementation adds development overhead but provides runtime safety and better developer experience
 
 **Performance vs. Development Time**
+
 - **Real-time Features**: Implemented Server-Sent Events for AI streaming but could optimize with WebSocket connections for bidirectional communication
 - **Caching**: No caching layer implemented - Redis could be added for improved performance
-
-### 🚀 Production Readiness
-
-The current implementation serves as an excellent foundation that demonstrates:
-- Clean architecture principles
-- Proper separation of concerns
-- Comprehensive testing strategy
-- Modern development practices
-- Docker containerization
-
-With the improvements outlined above, this would become a production-ready application suitable for enterprise deployment with proper scalability, security, and monitoring capabilities.
 
 ## 📋 Project Requirements Overview
 
@@ -413,4 +410,3 @@ Below is a comprehensive overview of the technical requirements that were succes
 - **⚠️ Authentication System**: JWT-based login system was not implemented in this version, but comprehensive implementation strategy was documented, including detailed explanation of previous successful implementations of similar authentication systems
 
 This project demonstrates a complete full-stack application with modern architecture patterns, comprehensive testing, AI integration, and production-ready deployment capabilities.
-
