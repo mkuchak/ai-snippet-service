@@ -1,7 +1,7 @@
 import { LLMFactory } from "llm-factory";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { GeminiGateway } from "./gemini-gateway";
 import type { StreamingCallbacks } from "../../core/ports/ai-service";
+import { GeminiGateway } from "./gemini-gateway";
 
 vi.mock("llm-factory", () => ({
   LLMFactory: vi.fn(),
@@ -77,7 +77,7 @@ describe("GeminiGateway", () => {
     it("should stream summary chunks and call onComplete", async () => {
       const input = "This is a test text for streaming";
       const chunks = ["Hello", " world", " from", " streaming"];
-      
+
       const mockStream = {
         [Symbol.asyncIterator]: async function* () {
           for (const chunk of chunks) {
@@ -114,7 +114,7 @@ describe("GeminiGateway", () => {
     it("should skip empty chunks", async () => {
       const input = "Test text";
       const chunks = ["Hello", "", " world", null, " test"];
-      
+
       const mockStream = {
         [Symbol.asyncIterator]: async function* () {
           for (const chunk of chunks) {
@@ -174,13 +174,15 @@ describe("GeminiGateway", () => {
         onComplete: vi.fn(),
       };
 
-      await expect(gateway.generateSummaryWithStream(input, callbacks)).rejects.toThrow("Streaming failed");
+      await expect(
+        gateway.generateSummaryWithStream(input, callbacks),
+      ).rejects.toThrow("Streaming failed");
     });
 
     it("should handle async iteration errors with onError callback", async () => {
       const input = "Test text";
       const error = new Error("Stream iteration failed");
-      
+
       const mockStream = {
         [Symbol.asyncIterator]: async function* () {
           yield "Hello";
@@ -237,7 +239,8 @@ describe.skip("GeminiGateway - Real Integration", () => {
     );
 
     const gateway = new RealGeminiGateway();
-    const input = "Machine learning is revolutionizing data analysis across industries.";
+    const input =
+      "Machine learning is revolutionizing data analysis across industries.";
 
     let streamedContent = "";
     let completed = false;

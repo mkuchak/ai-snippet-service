@@ -56,11 +56,11 @@ describe("Snippet API", () => {
       .get(`/snippets/${snippetId}/generate-summary`)
       .expect(200);
 
-    expect(streamResponse.headers['content-type']).toBe('text/event-stream');
-    expect(streamResponse.headers['cache-control']).toBe('no-cache');
-    expect(streamResponse.headers['connection']).toBe('keep-alive');
-    expect(streamResponse.text).toContain('data:');
-    expect(streamResponse.text).toContain('event: complete');
+    expect(streamResponse.headers["content-type"]).toBe("text/event-stream");
+    expect(streamResponse.headers["cache-control"]).toBe("no-cache");
+    expect(streamResponse.headers.connection).toBe("keep-alive");
+    expect(streamResponse.text).toContain("data:");
+    expect(streamResponse.text).toContain("event: complete");
   });
 
   it("should list all snippets", async () => {
