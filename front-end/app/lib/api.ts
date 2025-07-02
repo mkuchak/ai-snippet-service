@@ -14,6 +14,7 @@ class Api {
       const response = await client.get<Snippet[]>("/snippets");
       return response.data;
     } catch (error) {
+      console.error("Failed to get all snippets:", error);
       return [];
     }
   }

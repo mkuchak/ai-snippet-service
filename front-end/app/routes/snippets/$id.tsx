@@ -8,7 +8,7 @@ export async function loader({
   params,
 }: Route.LoaderArgs): Promise<{ snippet: Snippet }> {
   const { id } = params;
-  
+
   if (!id) {
     throw new Response("Snippet ID is required", { status: 400 });
   }

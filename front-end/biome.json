@@ -20,6 +20,7 @@
       "recommended": true,
       "a11y": {
         "recommended": true,
+        "noLabelWithoutControl": "off",
         "noSvgWithoutTitle": "off"
       },
       "correctness": {
@@ -27,6 +28,9 @@
       },
       "nursery": {
         "recommended": true
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off"
       }
     }
   },

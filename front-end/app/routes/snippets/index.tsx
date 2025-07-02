@@ -4,7 +4,7 @@ import { SnippetForm } from "../../components/snippets/snippet-form";
 import { SnippetList } from "../../components/snippets/snippet-list";
 import { Button } from "../../components/ui/button";
 import { api } from "../../lib/api";
-import type { CreateSnippetData, Snippet } from "../../lib/types";
+import type { Snippet } from "../../lib/types";
 import type { Route } from "./+types/index";
 
 export async function loader(): Promise<{ snippets: Snippet[] }> {

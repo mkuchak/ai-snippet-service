@@ -1,6 +1,5 @@
 import {
   index,
-  layout,
   prefix,
   type RouteConfig,
   route,

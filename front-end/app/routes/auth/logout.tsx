@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Navigate } from "react-router";
 import type { Route } from "./+types/logout";
 
 export function meta(): Route.MetaDescriptors {
@@ -24,12 +23,24 @@ export default function Logout() {
         <div className="bg-white rounded-lg border border-slate-200 p-8 shadow-sm text-center">
           <div className="mb-6">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="w-8 h-8 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
             <h1 className="text-2xl font-bold text-slate-900">Logged Out</h1>
-            <p className="text-slate-600 mt-2">You have been successfully logged out</p>
+            <p className="text-slate-600 mt-2">
+              You have been successfully logged out
+            </p>
           </div>
 
           <div className="bg-blue-50 border border-blue-200 rounded-md p-4 mb-6">
@@ -48,10 +59,12 @@ export default function Logout() {
                 />
               </svg>
               <div>
-                <h3 className="text-sm font-medium text-blue-900 mb-1">Logout Placeholder</h3>
+                <h3 className="text-sm font-medium text-blue-900 mb-1">
+                  Logout Placeholder
+                </h3>
                 <p className="text-sm text-blue-700">
-                  This is a reserved route for logout functionality. Actual session management will be implemented
-                  later.
+                  This is a reserved route for logout functionality. Actual
+                  session management will be implemented later.
                 </p>
               </div>
             </div>

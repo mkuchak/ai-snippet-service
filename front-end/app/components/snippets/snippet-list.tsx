@@ -12,7 +12,7 @@ export function SnippetList({ snippets, loading }: SnippetListProps) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.from({ length: 6 }).map((_, index) => (
-          <LoadingCard key={index} />
+          <LoadingCard key={`loading-card-${index}`} />
         ))}
       </div>
     );

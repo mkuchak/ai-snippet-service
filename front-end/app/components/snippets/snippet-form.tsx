@@ -52,9 +52,18 @@ export function SnippetForm({ onCancel }: SnippetFormProps) {
         <div className="bg-slate-50 rounded p-4 text-sm text-slate-600">
           <p className="font-medium mb-2">💡 Pro Tips:</p>
           <ul className="space-y-1">
-            <li>• Works great with blog drafts, meeting transcripts, and research notes</li>
-            <li>• The longer your content, the more valuable the AI summary becomes</li>
-            <li>• Generated summaries are perfect for emails, presentations, and reports</li>
+            <li>
+              • Works great with blog drafts, meeting transcripts, and research
+              notes
+            </li>
+            <li>
+              • The longer your content, the more valuable the AI summary
+              becomes
+            </li>
+            <li>
+              • Generated summaries are perfect for emails, presentations, and
+              reports
+            </li>
           </ul>
         </div>
       </Form>

@@ -22,7 +22,9 @@ export function Navigation() {
               to="/"
               className={cn(
                 "text-sm font-medium transition-colors hover:text-slate-900",
-                isActive("/") && location.pathname === "/" ? "text-slate-900" : "text-slate-600"
+                isActive("/") && location.pathname === "/"
+                  ? "text-slate-900"
+                  : "text-slate-600"
               )}
             >
               Home
