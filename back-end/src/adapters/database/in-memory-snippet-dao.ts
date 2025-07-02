@@ -16,7 +16,7 @@ export class InMemorySnippetDAO implements SnippetDAO {
     const snippet: Snippet = {
       id,
       text: data.text,
-      summary: data.summary,
+      summary: data.summary || "",
       createdAt: now,
       updatedAt: now,
     };

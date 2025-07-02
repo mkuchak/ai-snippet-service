@@ -8,7 +8,7 @@ export interface Snippet {
 
 export interface CreateSnippetData {
   text: string;
-  summary: string;
+  summary?: string;
 }
 
 export interface UpdateSnippetData {

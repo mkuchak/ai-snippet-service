@@ -40,7 +40,7 @@ export class MongoDBSnippetDAO implements SnippetDAO {
       const now = new Date();
       const mongoSnippet: Omit<MongoSnippet, "_id"> = {
         text: data.text,
-        summary: data.summary,
+        summary: data.summary || "",
         createdAt: now,
         updatedAt: now,
       };
