@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useRevalidator } from "react-router";
+import { Link, useRevalidator, redirect } from "react-router";
 import { StreamingSummary } from "../../components/snippets/streaming-summary";
 import { Button } from "../../components/ui/button";
 import { LoadingSpinner } from "../../components/ui/loading";
@@ -10,7 +10,7 @@ import type { Route } from "./+types/$id";
 
 export async function loader({
   params,
-}: Route.LoaderArgs): Promise<{ snippet: Snippet }> {
+}: Route.LoaderArgs): Promise<{ snippet: Snippet } | Response> {
   const { id } = params;
 
   if (!id) {
@@ -22,7 +22,7 @@ export async function loader({
     return { snippet };
   } catch (error) {
     console.error("Failed to load snippet:", error);
-    throw new Response("Snippet not found", { status: 404 });
+    return redirect("/snippets");
   }
 }
 export function meta({ data }: Route.MetaArgs): Route.MetaDescriptors {
