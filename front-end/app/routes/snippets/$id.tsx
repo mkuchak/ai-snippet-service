@@ -1,5 +1,8 @@
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useRevalidator } from "react-router";
+import { StreamingSummary } from "../../components/snippets/streaming-summary";
 import { Button } from "../../components/ui/button";
+import { LoadingSpinner } from "../../components/ui/loading";
 import { Toast, useToast } from "../../components/ui/toast";
 import { api } from "../../lib/api";
 import type { Snippet } from "../../lib/types";
@@ -39,6 +42,10 @@ export function meta({ data }: Route.MetaArgs): Route.MetaDescriptors {
 export default function SnippetDetail({ loaderData }: Route.ComponentProps) {
   const { snippet } = loaderData;
   const { toast, showToast, hideToast } = useToast();
+  const revalidator = useRevalidator();
+  const [isGeneratingSummary, setIsGeneratingSummary] = useState(
+    !snippet.summary
+  );
 
   const handleCopySnippet = async () => {
     try {
@@ -58,6 +65,17 @@ export default function SnippetDetail({ loaderData }: Route.ComponentProps) {
       console.error("Failed to copy summary:", error);
       showToast("Failed to copy summary");
     }
+  };
+
+  const handleSummaryComplete = () => {
+    setIsGeneratingSummary(false);
+    setTimeout(() => {
+      revalidator.revalidate();
+    }, 1000);
+  };
+
+  const handleStreamingStateChange = (isStreaming: boolean) => {
+    setIsGeneratingSummary(isStreaming);
   };
 
   return (
@@ -142,10 +160,22 @@ export default function SnippetDetail({ loaderData }: Route.ComponentProps) {
                   />
                 </svg>
                 AI Summary
+                {isGeneratingSummary && (
+                  <LoadingSpinner size="sm" className="ml-2" />
+                )}
               </h3>
-              <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
-                {snippet.summary}
-              </p>
+
+              {snippet.summary ? (
+                <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+                  {snippet.summary}
+                </p>
+              ) : (
+                <StreamingSummary
+                  snippetId={snippet.id}
+                  onSummaryComplete={handleSummaryComplete}
+                  onStreamingStateChange={handleStreamingStateChange}
+                />
+              )}
             </div>
 
             <div className="bg-white rounded-lg border border-slate-200 p-4 sm:p-6">
