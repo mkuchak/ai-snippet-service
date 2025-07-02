@@ -20,7 +20,7 @@
       "recommended": true,
       "a11y": {
         "recommended": true,
-        "noSvgWithoutTitle": "warn"
+        "noSvgWithoutTitle": "off"
       },
       "correctness": {
         "noEmptyPattern": "warn"
