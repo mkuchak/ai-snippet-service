@@ -16,8 +16,14 @@ if (DEVELOPMENT) {
   console.log("Starting development server");
   const viteDevServer = await import("vite").then((vite) =>
     vite.createServer({
-      server: { middlewareMode: true },
-    }),
+      server: {
+        middlewareMode: true,
+        hmr: {
+          port: 24678,
+          host: "0.0.0.0",
+        },
+      },
+    })
   );
   app.use(viteDevServer.middlewares);
   app.use(async (req, res, next) => {
@@ -33,15 +39,12 @@ if (DEVELOPMENT) {
   });
 } else {
   console.log("Starting production server");
-  app.use(
-    "/assets",
-    express.static("build/client/assets", { immutable: true, maxAge: "1y" }),
-  );
+  app.use("/assets", express.static("build/client/assets", { immutable: true, maxAge: "1y" }));
   app.use(morgan("tiny"));
   app.use(express.static("build/client", { maxAge: "1h" }));
   app.use(await import(BUILD_PATH).then((mod) => mod.app));
 }
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

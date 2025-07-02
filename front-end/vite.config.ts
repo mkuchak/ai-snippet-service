@@ -12,5 +12,11 @@ export default defineConfig(({ isSsrBuild }) => ({
         }
       : undefined,
   },
+  server: {
+    hmr: {
+      port: 24678,
+      host: "0.0.0.0",
+    },
+  },
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths(), devtoolsJson()],
 }));
