@@ -45,6 +45,28 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     
+    services:
+      mongodb:
+        image: mongo:7
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: password
+          MONGO_INITDB_DATABASE: ai-snippet-service
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand(\"ping\").ok' --quiet"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
+    env:
+      MONGODB_URI: mongodb://admin:password@localhost:27017/ai-snippet-service?authSource=admin
+      MONGODB_USERNAME: admin
+      MONGODB_PASSWORD: password
+      MONGODB_DATABASE: ai-snippet-service
+      MONGODB_DATABASE_DEV: ai-snippet-service-dev
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
