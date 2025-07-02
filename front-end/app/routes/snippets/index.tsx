@@ -26,7 +26,9 @@ export async function action({ request }: Route.ActionArgs) {
   }
 
   try {
-    const snippet = await api.createSnippet({ text: text.trim() });
+    const snippet = await api.createSnippetWithoutSummary({
+      text: text.trim(),
+    });
     return redirect(`/snippets/${snippet.id}`);
   } catch (error) {
     console.error("Failed to create summary:", error);

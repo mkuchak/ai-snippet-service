@@ -24,8 +24,8 @@ class Api {
     return response.data;
   }
 
-  async createSnippet(data: CreateSnippetData): Promise<Snippet> {
-    const response = await client.post<Snippet>("/snippets", data);
+  async createSnippetWithoutSummary(data: CreateSnippetData): Promise<Snippet> {
+    const response = await client.post<Snippet>("/snippets/only-create", data);
     return response.data;
   }
 

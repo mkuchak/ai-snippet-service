@@ -11,6 +11,25 @@ export class SnippetControllers {
         res.status(400).json({ error: "text is required" });
         return;
       }
+      const snippet = await this.snippetService.createSnippet(text);
+      res.status(201).json({
+        id: snippet.id,
+        text: snippet.text,
+        summary: snippet.summary,
+      });
+    } catch (error) {
+      console.error("Failed to create snippet", error);
+      res.status(500).json({ error: "Failed to create snippet" });
+    }
+  };
+
+  createSnippetWithoutSummarize = async (req: Request, res: Response) => {
+    try {
+      const { text } = req.body;
+      if (!text) {
+        res.status(400).json({ error: "text is required" });
+        return;
+      }
       const snippet =
         await this.snippetService.createSnippetWithoutSummary(text);
       res.status(201).json({
