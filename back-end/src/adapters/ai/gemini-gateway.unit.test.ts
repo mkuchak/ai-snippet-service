@@ -1,12 +1,13 @@
 import { LLMFactory } from "llm-factory";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { StreamingCallbacks } from "../../core/ports/ai-service";
+import type { StreamingCallbacks } from "../../core/ports/ai-gateway";
 import { GeminiGateway } from "./gemini-gateway";
 
 vi.mock("llm-factory", () => ({
   LLMFactory: vi.fn(),
 }));
 
+// As it is a mocking test, it is a unit test
 describe("GeminiGateway", () => {
   let gateway: GeminiGateway;
   let mockGenerate: ReturnType<typeof vi.fn>;
@@ -208,6 +209,7 @@ describe("GeminiGateway", () => {
 });
 
 // This test is skipped because it consumes tokens from the Gemini API
+// If applicable, it would be a integration test instead of a unit test
 describe.skip("GeminiGateway - Real Integration", () => {
   it("should generate real summary using actual Gemini API", async () => {
     vi.doUnmock("llm-factory");

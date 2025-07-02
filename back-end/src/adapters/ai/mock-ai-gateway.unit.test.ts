@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import type { StreamingCallbacks } from "../../core/ports/ai-service";
+import type { StreamingCallbacks } from "../../core/ports/ai-gateway";
 import { MockAIGateway } from "./mock-ai-gateway";
 
 describe("MockAIGateway", () => {

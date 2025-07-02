@@ -1,14 +1,14 @@
-import type { AIService, StreamingCallbacks } from "../ports/ai-service";
+import type { AIGateway, StreamingCallbacks } from "../ports/ai-gateway";
 import type { SnippetDAO } from "../ports/snippet-dao";
 
 export class SnippetService {
   constructor(
     private dao: SnippetDAO,
-    private aiService: AIService,
+    private aiGateway: AIGateway,
   ) {}
 
   async createSnippet(text: string) {
-    const summary = await this.aiService.generateSummary(text);
+    const summary = await this.aiGateway.generateSummary(text);
     return await this.dao.create({ text, summary });
   }
 
@@ -46,7 +46,7 @@ export class SnippetService {
       onError: callbacks.onError,
     };
 
-    await this.aiService.generateSummaryWithStream(
+    await this.aiGateway.generateSummaryWithStream(
       snippet.text,
       enhancedCallbacks,
     );

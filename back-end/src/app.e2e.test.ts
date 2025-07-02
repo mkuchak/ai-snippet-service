@@ -8,8 +8,8 @@ import { SnippetService } from "./core/services/snippet-service";
 
 function createTestApp() {
   const dao = new InMemorySnippetDAO();
-  const aiService = new MockAIGateway();
-  const snippetService = new SnippetService(dao, aiService);
+  const aiGateway = new MockAIGateway();
+  const snippetService = new SnippetService(dao, aiGateway);
   const app = express();
   app.use(express.json());
   app.use(createSnippetRoutes(snippetService));

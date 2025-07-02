@@ -4,7 +4,7 @@ export interface StreamingCallbacks {
   onError?: (error: Error) => void;
 }
 
-export interface AIService {
+export interface AIGateway {
   generateSummary(text: string): Promise<string>;
   generateSummaryWithStream(
     text: string,

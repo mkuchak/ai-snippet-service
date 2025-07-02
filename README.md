@@ -171,7 +171,7 @@ back-end/
 │   │   │   ├── snippet-service.ts
 │   │   │   └── *.integration.test.ts
 │   │   ├── ports/                   # Interface definitions
-│   │   │   ├── ai-service.ts
+│   │   │   ├── ai-gateway.ts
 │   │   │   └── snippet-dao.ts
 │   │   └── types/                   # Domain types
 │   │       └── snippet.ts

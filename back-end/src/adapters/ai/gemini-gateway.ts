@@ -2,11 +2,11 @@ import dedent from "dedent";
 import { LLMFactory } from "llm-factory";
 import { env } from "../../config/env";
 import type {
-  AIService,
+  AIGateway,
   StreamingCallbacks,
-} from "../../core/ports/ai-service";
+} from "../../core/ports/ai-gateway";
 
-export class GeminiGateway implements AIService {
+export class GeminiGateway implements AIGateway {
   private llmFactory: LLMFactory = new LLMFactory({
     googleApiKey: env.GEMINI_API_KEY,
   });

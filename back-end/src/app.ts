@@ -23,8 +23,8 @@ async function startApp() {
      * for better testability and loose coupling in production apps.
      */
     const dao = new MongoDBSnippetDAO(client, env.MONGODB_DATABASE);
-    const aiService = new GeminiGateway();
-    const snippetService = new SnippetService(dao, aiService);
+    const aiGateway = new GeminiGateway();
+    const snippetService = new SnippetService(dao, aiGateway);
 
     /*
      * Express could be a complete adapter, creating a port adapter

@@ -1,9 +1,9 @@
 import type {
-  AIService,
+  AIGateway,
   StreamingCallbacks,
-} from "../../core/ports/ai-service";
+} from "../../core/ports/ai-gateway";
 
-export class MockAIGateway implements AIService {
+export class MockAIGateway implements AIGateway {
   async generateSummary(text: string): Promise<string> {
     return `Summary: ${text.substring(0, 30)}${text.length > 30 ? "..." : ""}`;
   }

@@ -6,13 +6,13 @@ import { SnippetService } from "./snippet-service";
 describe("SnippetService Integration Test", () => {
   let snippetService: SnippetService;
   let dao: InMemorySnippetDAO;
-  let aiService: MockAIGateway;
+  let aiGateway: MockAIGateway;
 
   beforeEach(() => {
     dao = new InMemorySnippetDAO();
     dao.clear();
-    aiService = new MockAIGateway();
-    snippetService = new SnippetService(dao, aiService);
+    aiGateway = new MockAIGateway();
+    snippetService = new SnippetService(dao, aiGateway);
   });
 
   it("should create a snippet with AI-generated summary", async () => {
